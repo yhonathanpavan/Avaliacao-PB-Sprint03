@@ -48,4 +48,27 @@ public class Estado{
     public Double getArea() {
         return area;
     }
+
+    //Setters
+
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setRegiao(RegiaoDoEstado regiao) {
+        this.regiao = regiao;
+    }
+
+    public void setPopulacao(Long populacao) {
+        this.populacao = populacao;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
 }
