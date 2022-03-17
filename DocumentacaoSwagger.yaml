@@ -1,10 +1,10 @@
 openapi: 3.0.1
 
 info: 
-  title: API de estados
+  title: API - Controle de estados
   description: Api para controle dos estados brasileiros e suas informações
   version: 0.0.1
-  termsOfService: https://mockapi.io
+  
   #Contatos
   contact:
     name: Yhonathan Matheus Pavan
@@ -12,12 +12,10 @@ info:
 
 #Links externos
 externalDocs: 
-  description: projeto GitHub
+  description: Projeto GitHub
   url: https://github.com/yhonathanpavan/Avaliacao-PB-Sprint03/tree/master/Exercicio01
-  
-#Antes de ter paths, preciso ter um servidor
 
-servers: #Funcionam com arrays, onde eu informo a url e a descricao. onde cada item do array é um endpoint.
+servers: 
  - url: http://localhost:8080
    description: API de teste
 paths:
@@ -25,7 +23,7 @@ paths:
     post:
       summary: Cria novos estados
       description: "Através desse endpoint você pode criar novos estados brasileiros"
-      requestBody: #Informo como será enviado / Mandar dados no corpo da requisição
+      requestBody: 
         content:
           application/json:
             schema:
@@ -50,26 +48,36 @@ paths:
               $ref: "#/components/schemas/Estado"
             
     get: 
-      summary: Recupera todos os estados #sumary descreve o que esse verbo get faz
-      responses: #Defino as possiveis respostas
+      summary: Recupera todos os estados  
+      parameters:
+        - name: nomeRegiao
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: string
+      responses: 
         200:
           description: Sucesso
-          content: #A chave do conteúdo é o formato
+          content: 
             application/json:
               schema:
                 $ref: "#/components/schemas/Estados"
 
             
   /api/states/{id}:
-    parameters: #Sobre os parâmetros
+    parameters: 
     - name: id
-      in: path #especifio que o id está no path(url)
+      in: path 
       schema:
         type: integer
-      required: true #Preciso informar o parametro(obrigatorio)
+      required: true 
     get:
       summary: Recupera uma entidade pelo ID
-      #Preciso mapear o parametro {id}
       responses:
         200:
           description: Sucesso
@@ -86,7 +94,7 @@ paths:
     put:
       summary: Altera um estado existente pelo ID
       description: "Através desse endpoint você pode atualizar novos estados brasileiros"
-      requestBody: #Informo como será enviado / Mandar dados no corpo da requisição
+      requestBody: 
         content:
           application/json:
             schema:
@@ -117,7 +125,6 @@ paths:
 
     delete:
       summary: Remove um estado pelo ID
-      #Preciso mapear o parametro {id}
       responses:
         200:
           description: Sucesso
@@ -131,8 +138,7 @@ paths:
             application/json:
               example: "Not Found"
               
-
-components: #É algo que nós podemos reutilizar em vários lugares
+components: 
   schemas:
     Estado:
      type: object
@@ -149,7 +155,7 @@ components: #É algo que nós podemos reutilizar em vários lugares
         type: string
       area:   
         type: number  
-    Estados: #é um array de Especialidade
+    Estados: 
       type: array
       items:
         $ref: "#/components/schemas/Estado"
