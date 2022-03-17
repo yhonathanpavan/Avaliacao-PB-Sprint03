@@ -1,0 +1,157 @@
+openapi: 3.0.1
+
+info: 
+  title: API de estados
+  description: Api para controle dos estados brasileiros e suas informações
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  #Contatos
+  contact:
+    name: Yhonathan Matheus Pavan
+    email: yhonathannpavan@gmail.com
+
+#Links externos
+externalDocs: 
+  description: projeto GitHub
+  url: https://github.com/yhonathanpavan/Avaliacao-PB-Sprint03/tree/master/Exercicio01
+  
+#Antes de ter paths, preciso ter um servidor
+
+servers: #Funcionam com arrays, onde eu informo a url e a descricao. onde cada item do array é um endpoint.
+ - url: http://localhost:8080
+   description: API de teste
+paths:
+  /api/states:
+    post:
+      summary: Cria novos estados
+      description: "Através desse endpoint você pode criar novos estados brasileiros"
+      requestBody: #Informo como será enviado / Mandar dados no corpo da requisição
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:   
+                  type: string
+                regiao:   
+                  type: string
+                populacao:   
+                  type: integer
+                capital:   
+                  type: string
+                area:   
+                  type: number  
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+            
+    get: 
+      summary: Recupera todos os estados #sumary descreve o que esse verbo get faz
+      responses: #Defino as possiveis respostas
+        200:
+          description: Sucesso
+          content: #A chave do conteúdo é o formato
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estados"
+
+            
+  /api/states/{id}:
+    parameters: #Sobre os parâmetros
+    - name: id
+      in: path #especifio que o id está no path(url)
+      schema:
+        type: integer
+      required: true #Preciso informar o parametro(obrigatorio)
+    get:
+      summary: Recupera uma entidade pelo ID
+      #Preciso mapear o parametro {id}
+      responses:
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+              
+    put:
+      summary: Altera um estado existente pelo ID
+      description: "Através desse endpoint você pode atualizar novos estados brasileiros"
+      requestBody: #Informo como será enviado / Mandar dados no corpo da requisição
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:   
+                  type: string
+                regiao:   
+                  type: string
+                populacao:   
+                  type: integer
+                capital:   
+                  type: string
+                area:   
+                  type: number  
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+           application/json:
+            schema:
+              $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+
+    delete:
+      summary: Remove um estado pelo ID
+      #Preciso mapear o parametro {id}
+      responses:
+        200:
+          description: Sucesso
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+        404:
+          description: Estado não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+              
+
+components: #É algo que nós podemos reutilizar em vários lugares
+  schemas:
+    Estado:
+     type: object
+     properties:
+      id: 
+        type: integer
+      nome:   
+        type: string
+      regiao:   
+        type: string
+      populacao:   
+        type: integer
+      capital:   
+        type: string
+      area:   
+        type: number  
+    Estados: #é um array de Especialidade
+      type: array
+      items:
+        $ref: "#/components/schemas/Estado"
+
+    
