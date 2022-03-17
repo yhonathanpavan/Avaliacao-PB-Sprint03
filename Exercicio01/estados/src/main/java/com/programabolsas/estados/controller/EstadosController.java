@@ -7,7 +7,10 @@ import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
 import com.programabolsas.estados.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,12 +30,12 @@ public class EstadosController {
     private EstadoRepository estadoRepository;
 
     @GetMapping
-    public List<EstadoDto> listar(RegiaoDoEstado nomeRegiao){
+    public Page<EstadoDto> listar(@RequestParam(required = false) RegiaoDoEstado nomeRegiao, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable paginacao){
         if(nomeRegiao == null){
-            List<Estado> estados = estadoRepository.findAll();
+            Page<Estado> estados = estadoRepository.findAll(paginacao);
             return EstadoDto.converter(estados);
         } else {
-            List<Estado> estados = estadoRepository.findByRegiao(nomeRegiao);
+            Page<Estado> estados = estadoRepository.findByRegiao(nomeRegiao, paginacao);
             return EstadoDto.converter(estados);
         }
     }
