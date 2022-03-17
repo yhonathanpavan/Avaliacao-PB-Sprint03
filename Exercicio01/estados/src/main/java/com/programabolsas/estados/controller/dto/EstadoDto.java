@@ -4,9 +4,6 @@ import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 public class EstadoDto{
 
@@ -52,7 +49,7 @@ public class EstadoDto{
 
     public static Page<EstadoDto> converter(Page<Estado> estados){
         return estados.map(EstadoDto::new);
-    }                               //Chama o construtor que recebe o próprio tópico como parâmetro e transformo numa lista
+    }
 
 
 }
