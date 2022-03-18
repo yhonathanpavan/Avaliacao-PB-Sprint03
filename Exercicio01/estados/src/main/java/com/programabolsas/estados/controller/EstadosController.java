@@ -23,9 +23,6 @@ import javax.validation.Valid;
 public class EstadosController {
 
     @Autowired
-    private EstadoRepository estadoRepository;
-
-    @Autowired
     private EstadosService service;
 
     @GetMapping
