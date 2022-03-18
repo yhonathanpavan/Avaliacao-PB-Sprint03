@@ -32,10 +32,6 @@ public class ErroDeValidacaoHandler {
 
             ErroDeFormularioDto erro = new ErroDeFormularioDto(e.getField(), mensagem);
             erroDeFormDto.add(erro);
-
-            System.out.println(mensagem);
-            System.out.println(erro);
-            System.out.println(erroDeFormDto);
         });
 
         return erroDeFormDto;
