@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/states")
@@ -26,8 +27,8 @@ public class EstadosController {
     private EstadosService service;
 
     @GetMapping
-    public Page<EstadoDto> listar(@RequestParam(required = false) RegiaoDoEstado nomeRegiao, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable paginacao){
-        return service.listarTodos(nomeRegiao, paginacao);
+    public List<EstadoDto> listar(@RequestParam(required = false) RegiaoDoEstado nomeRegiao, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable paginacao){
+        return service.listarTodos(nomeRegiao, paginacao).getContent();
     }
 
     @GetMapping("/{id}")
