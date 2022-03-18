@@ -3,7 +3,6 @@ package com.programabolsas.estados.controller;
 import com.programabolsas.estados.controller.dto.EstadoDto;
 import com.programabolsas.estados.controller.form.AtualizacaoEstadoForm;
 import com.programabolsas.estados.controller.form.EstadoForm;
-import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
 import com.programabolsas.estados.repository.EstadoRepository;
 import com.programabolsas.estados.service.EstadosService;
@@ -41,7 +40,7 @@ public class EstadosController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<EstadoDto> cadastrar(@RequestBody EstadoForm estadoForm, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<EstadoDto> cadastrar(@RequestBody @Valid EstadoForm estadoForm, UriComponentsBuilder uriBuilder){
         return service.cadastrar(estadoForm, uriBuilder);
     }
 
