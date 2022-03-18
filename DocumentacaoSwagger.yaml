@@ -27,18 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                nome:   
-                  type: string
-                regiao:   
-                  type: string
-                populacao:   
-                  type: integer
-                capital:   
-                  type: string
-                area:   
-                  type: number  
+              $ref: "#/components/schemas/EstadoSemId" 
       responses:
         201:
           description: "Sucesso"
@@ -98,18 +87,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                nome:   
-                  type: string
-                regiao:   
-                  type: string
-                populacao:   
-                  type: integer
-                capital:   
-                  type: string
-                area:   
-                  type: number  
+              $ref: "#/components/schemas/EstadoSemId"
       responses:
         201:
           description: "Sucesso"
@@ -128,10 +106,7 @@ paths:
       responses:
         200:
           description: Sucesso
-          content: 
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Estado"
+
         404:
           description: Estado não encontrado
           content:
@@ -154,7 +129,22 @@ components:
       capital:   
         type: string
       area:   
+        type: number
+      
+    EstadoSemId:
+     type: object
+     properties:
+      nome:   
+        type: string
+      regiao:   
+        type: string
+      populacao:   
+        type: integer
+      capital:   
+        type: string
+      area:   
         type: number  
+        
     Estados: 
       type: array
       items:
