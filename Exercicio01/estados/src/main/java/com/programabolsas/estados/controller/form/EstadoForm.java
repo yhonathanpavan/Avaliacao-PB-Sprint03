@@ -2,15 +2,13 @@ package com.programabolsas.estados.controller.form;
 
 import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
 public class EstadoForm {
 
-    @NotNull @NotEmpty @Length(min = 5)
+    @NotNull @NotEmpty
     private String nome;
     @NotNull
     private RegiaoDoEstado regiao;
