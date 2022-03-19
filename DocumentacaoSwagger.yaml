@@ -13,7 +13,7 @@ info:
 #Links externos
 externalDocs: 
   description: Projeto GitHub
-  url: https://github.com/yhonathanpavan/Avaliacao-PB-Sprint03/tree/master/Exercicio01
+  url: https://github.com/yhonathanpavan/Avaliacao-PB-Sprint03/
 
 servers: 
  - url: http://localhost:8080
@@ -22,7 +22,6 @@ paths:
   /api/states:
     post:
       summary: Cria novos estados
-      description: "Através desse endpoint você pode criar novos estados brasileiros"
       requestBody: 
         content:
           application/json:
@@ -30,33 +29,40 @@ paths:
               $ref: "#/components/schemas/EstadoSemId" 
       responses:
         201:
-          description: "Sucesso"
+          description: Created
           content:
            application/json:
             schema:
               $ref: "#/components/schemas/Estado"
-            
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MensagensBadRequest"
+              
     get: 
-      summary: Recupera todos os estados  
+      summary: Recupera todos os estados
       parameters:
         - name: nomeRegiao
           in: query
-          description: Limits the number of items on a page
+          description: Filtra os estados por regiões (Norte, Nordeste, Sul, Sudeste e Centro_Oeste)
           schema:
             type: string
         - name: sort
           in: query
-          description: Limits the number of items on a page
+          description: Ordena a visualização dos estados por "populacao" ou "area"
           schema:
             type: string
       responses: 
         200:
-          description: Sucesso
+          description: OK
           content: 
             application/json:
               schema:
                 $ref: "#/components/schemas/Estados"
-
+        400:
+          description: Bad Request
             
   /api/states/{id}:
     parameters: 
@@ -66,19 +72,17 @@ paths:
         type: integer
       required: true 
     get:
-      summary: Recupera uma entidade pelo ID
+      summary: Recupera uma estado pelo ID
       responses:
         200:
-          description: Sucesso
+          description: OK
           content: 
             application/json:
               schema:
                 $ref: "#/components/schemas/Estado"
         404:
-          description: Estado não encontrado
-          content:
-            application/json:
-              example: "Not Found"
+          description: Not Found
+  
               
     put:
       summary: Altera um estado existente pelo ID
@@ -89,29 +93,32 @@ paths:
             schema:
               $ref: "#/components/schemas/EstadoSemId"
       responses:
-        201:
-          description: "Sucesso"
+        200:
+          description: OK
           content:
            application/json:
             schema:
               $ref: "#/components/schemas/Estado"
-        404:
-          description: Estado não encontrado
+
+        400:
+          description: Bad Request
           content:
             application/json:
-              example: "Not Found"
+              schema:
+                $ref: "#/components/schemas/MensagensBadRequest"
+        404:
+          description: Not Found
+      
 
     delete:
       summary: Remove um estado pelo ID
       responses:
         200:
-          description: Sucesso
+          description: OK
 
         404:
-          description: Estado não encontrado
-          content:
-            application/json:
-              example: "Not Found"
+          description: Not Found
+         
               
 components: 
   schemas:
@@ -143,8 +150,17 @@ components:
       capital:   
         type: string
       area:   
-        type: number  
+        type: number
         
+    MensagensBadRequest:
+      type: array
+      items:
+       properties:
+        campo:   
+          type: string
+        erro:   
+          type: string
+          
     Estados: 
       type: array
       items:
