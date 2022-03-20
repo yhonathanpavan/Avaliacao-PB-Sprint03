@@ -4,13 +4,8 @@ import com.programabolsas.estados.controller.dto.EstadoDto;
 import com.programabolsas.estados.controller.form.AtualizacaoEstadoForm;
 import com.programabolsas.estados.controller.form.EstadoForm;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
-import com.programabolsas.estados.repository.EstadoRepository;
 import com.programabolsas.estados.service.EstadosService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,8 +22,8 @@ public class EstadosController {
     private EstadosService service;
 
     @GetMapping
-    public List<EstadoDto> listar(@RequestParam(required = false) RegiaoDoEstado nomeRegiao, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable paginacao){
-        return service.listarTodos(nomeRegiao, paginacao).getContent();
+    public List<EstadoDto> listar(@RequestParam(required = false) RegiaoDoEstado nomeRegiao, @RequestParam(required = false) String sort){
+        return service.listarTodos(nomeRegiao, sort);
     }
 
     @GetMapping("/{id}")

@@ -7,13 +7,13 @@ import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
 import com.programabolsas.estados.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,12 +22,23 @@ public class EstadosService {
     @Autowired
     EstadoRepository estadoRepository;
 
-    public Page<EstadoDto> listarTodos(RegiaoDoEstado nomeRegiao, Pageable paginacao) {
+    public List<EstadoDto> listarTodos(RegiaoDoEstado nomeRegiao, String ordenacao){
+
+        Sort sort = Sort.by("id").ascending();
+
+        if(ordenacao!=null) {
+            if (ordenacao.equals("populacao")) {
+                sort = Sort.by("populacao").descending();
+            }else if (ordenacao.equals("area")) {
+                sort = Sort.by("area").descending();
+            }
+        }
+
         if(nomeRegiao == null){
-            Page<Estado> estados = estadoRepository.findAll(paginacao);
+            List<Estado> estados = estadoRepository.findAll(sort);
             return EstadoDto.converter(estados);
         } else {
-            Page<Estado> estados = estadoRepository.findByRegiao(nomeRegiao, paginacao);
+            List<Estado> estados = estadoRepository.findByRegiao(nomeRegiao, sort);
             return EstadoDto.converter(estados);
         }
     }

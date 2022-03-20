@@ -2,7 +2,9 @@ package com.programabolsas.estados.controller.dto;
 
 import com.programabolsas.estados.modelo.Estado;
 import com.programabolsas.estados.modelo.RegiaoDoEstado;
-import org.springframework.data.domain.Page;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class EstadoDto{
@@ -47,8 +49,8 @@ public class EstadoDto{
         return area;
     }
 
-    public static Page<EstadoDto> converter(Page<Estado> estados){
-        return estados.map(EstadoDto::new);
+    public static List<EstadoDto> converter(List<Estado> estados){
+        return estados.stream().map(EstadoDto::new).collect(Collectors.toList());
     }
 
 
